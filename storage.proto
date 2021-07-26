@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package com.github.ooze;
+
+message Palette {
+  // The palette's main identifier. Recommended format is
+  // `namespace:identifier`, but this is not strictly required.
+  string name = 1;
+
+  // The Minecraft data version that the palette's states are compatible with.
+  uint32 data_version = 2;
+
+  // The blocks in the palette, mapped by unique integer identifiers. For best
+  // compression, the identifiers should be zero-based indices for each state,
+  // but this is not required.
+  map<uint32, BlockState> states = 3;
+
+  message BlockState {
+    // The state's main identifier. Examples are "minecraft:stone", "cactus",
+    // and "ooze:legacy".
+    string name = 1;
+
+    // Additional information defining the state, if any. This includes things
+    // like orientation, power, and waterlogged state.
+    BareNbt properties = 2;
+  }
+}
+
+message PackedUIntArray {
+  // The number of uints in the array.
+  uint32 size = 1;
+
+  // The number of bits used to store each uint in the array. Valid values are
+  // in the range [0, 32].
+  uint32 magnitude = 2;
+
+  // The contents of the array. Values are stored on the bit level, so uints in
+  // the array may not be aligned with the bytes themselves. A single byte might
+  // contain multiple values, and/or a single value could be stored between two
+  // or more bytes.
+  //
+  // Given a value's index in the array, i, the byte index that it starts in can
+  // be found using `floor(i * magnitude / 8)`. Within that byte, the starting
+  // bit's offset (from the LSB) is `(i * magnitude) mod 8`.
+  //
+  // If the last bit of the byte is reached before the value is fully read,
+  // continue reading from the right side (LSB) of the next byte. Repeat until
+  // the full number of bits, determined by `magnitude`, have been consumed.
+  bytes contents = 3;
+}
+
+message BareNbt {
+  // The raw, uncompressed contents of an NBT compound.
+  //
+  // Closing tag is required (TAG_End), but the name and type of the root
+  // compound itself must not be included.
+  bytes contents = 1;
+}

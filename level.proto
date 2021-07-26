@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package com.github.ooze;
+
+option java_package = "com.github.ooze.proto";
+option java_outer_classname = "LevelProtos";
+option java_multiple_files = true;
+
+message Level {
+  Dimensions size = 1; // Dimensions of the level. Units are in cells (16 blocks).
+  message Dimensions {
+    uint32 width = 1;
+    uint32 height = 2;
+    uint32 depth = 3;
+  }
+
+  Coordinates origin = 2; // Lowest X, Y, and Z of any cell. Units are in cells (16 blocks).
+  message Coordinates {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+  }
+
+  BareNbt metadata = 3; // Custom NBT metadata for the level itself.
+
+  repeated BareNbt entities = 4;  // NBT data for every entity in the level, if any.
+
+  repeated BareNbt block_entities = 5; // NBT data for every block entity in the level, if any.
+
+  repeated Palette palettes = 6; // Lists of blocks that can be stored in the level's cells.
+
+  // Bit-field indicating which cells are present. Cells appear in XZY order.
+  //
+  // # of bytes = ceil(width * height * depth / 8)
+  bytes population = 7;
+
+  // The blocks in the level. Each cell represents a 16x16x16 cube of blocks,
+  // sometimes referred to as a "chunk section".
+  //
+  // Cells appear in the same order here as in the `population` field. No gaps
+  // are left for unpopulated chunks.
+  repeated Cell cells = 8;
+}
+
+message Cell {
+    // The `name` of the palette whose states are referred to in the `blocks`
+    // array. If no palette can be found using that name, the cell is ignored.
+    string palette_name = 2;
+
+    // A 4096-element array of the blocks in this cell.
+    //
+    // Each value in the array refers to a state's identifier in the palette. If
+    // the palette does not have a state with an identifier used here, the block
+    // will be default to air.
+    //
+    // Because the array represents a flattened cube, blocks in the array appear
+    // in XZY order. This also helps with better compression.
+    PackedUIntArray blocks = 3;
+  }

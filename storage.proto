@@ -1,6 +1,7 @@
 syntax = "proto3";
+package com.github.ooze.protos;
 
-package com.github.ooze;
+option java_multiple_files = true;
 
 message Palette {
   // The palette's main identifier. Recommended format is

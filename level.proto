@@ -1,11 +1,8 @@
 syntax = "proto3";
-
-package com.github.ooze;
+package com.github.ooze.protos;
 
 import "storage.proto";
 
-option java_package = "com.github.ooze.proto";
-option java_outer_classname = "LevelProtos";
 option java_multiple_files = true;
 
 message Level {
@@ -45,17 +42,17 @@ message Level {
 }
 
 message Cell {
-  // The `name` of the palette whose states are referred to in the `blocks`
-  // array. If no palette can be found using that name, the cell is ignored.
-  string palette_name = 2;
+    // The `name` of the palette whose states are referred to in the `blocks`
+    // array. If no palette can be found using that name, the cell is ignored.
+    string palette_name = 2;
 
-  // A 4096-element array of the blocks in this cell.
-  //
-  // Each value in the array refers to a state's identifier in the palette. If
-  // the palette does not have a state with an identifier used here, the block
-  // will be default to air.
-  //
-  // Because the array represents a flattened cube, blocks in the array appear
-  // in XZY order. This also helps with better compression.
-  PackedUIntArray blocks = 3;
-}
+    // A 4096-element array of the blocks in this cell.
+    //
+    // Each value in the array refers to a state's identifier in the palette. If
+    // the palette does not have a state with an identifier used here, the block
+    // will be default to air.
+    //
+    // Because the array represents a flattened cube, blocks in the array appear
+    // in XZY order. This also helps with better compression.
+    PackedUIntArray blocks = 3;
+  }

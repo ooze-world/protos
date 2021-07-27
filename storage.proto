@@ -3,7 +3,7 @@ package com.github.ooze.protos;
 
 option java_multiple_files = true;
 
-message Palette {
+message PaletteData {
   // The palette's main identifier. Recommended format is
   // `namespace:identifier`, but this is not strictly required.
   string name = 1;
@@ -14,20 +14,20 @@ message Palette {
   // The blocks in the palette, mapped by unique integer identifiers. For best
   // compression, the identifiers should be zero-based indices for each state,
   // but this is not required.
-  map<uint32, BlockState> states = 3;
+  map<uint32, BlockStateData> states = 3;
 
-  message BlockState {
+  message BlockStateData {
     // The state's main identifier. Examples are "minecraft:stone", "cactus",
     // and "ooze:legacy".
     string name = 1;
 
     // Additional information defining the state, if any. This includes things
     // like orientation, power, and waterlogged state.
-    BareNbt properties = 2;
+    BareNbtData properties = 2;
   }
 }
 
-message PackedUIntArray {
+message PackedUIntArrayData {
   // The number of uints in the array.
   uint32 size = 1;
 
@@ -50,7 +50,7 @@ message PackedUIntArray {
   bytes contents = 3;
 }
 
-message BareNbt {
+message BareNbtData {
   // The raw, uncompressed contents of an NBT compound.
   //
   // Closing tag is required (TAG_End), but the name and type of the root

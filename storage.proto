@@ -11,10 +11,10 @@ message PaletteData {
   // The Minecraft data version that the palette's states are compatible with.
   uint32 data_version = 2;
 
-  // The blocks in the palette, mapped by unique integer identifiers. For best
-  // compression, the identifiers should be zero-based indices for each state,
-  // but this is not required.
-  map<uint32, BlockStateData> states = 3;
+  // The blocks in the palette. Data using the palette can
+  // reference the palette's states using their indices in
+  // this list.
+  repeated BlockStateData states = 3;
 
   message BlockStateData {
     // The state's main identifier. Examples are "minecraft:stone", "cactus",

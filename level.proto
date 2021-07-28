@@ -20,11 +20,11 @@ message LevelData {
     int32 z = 3;
   }
 
-  BareNbtData metadata = 3; // Custom NBT metadata for the level itself.
+  bytes metadata = 3; // Custom NBT metadata for the level itself.
 
-  repeated BareNbtData entities = 4;  // NBT data for every entity in the level, if any.
+  repeated bytes entities = 4;  // NBT data for every entity in the level, if any.
 
-  repeated BareNbtData block_entities = 5; // NBT data for every block entity in the level, if any.
+  repeated bytes block_entities = 5; // NBT data for every block entity in the level, if any.
 
   repeated PaletteData palettes = 6; // Lists of blocks that can be stored in the level's cells.
 

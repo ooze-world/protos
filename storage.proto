@@ -23,7 +23,7 @@ message PaletteData {
 
     // Additional information defining the state, if any. This includes things
     // like orientation, power, and waterlogged state.
-    BareNbtData properties = 2;
+    bytes properties = 2;
   }
 }
 
@@ -48,12 +48,4 @@ message PackedUIntArrayData {
   // continue reading from the right side (LSB) of the next byte. Repeat until
   // the full number of bits, determined by `magnitude`, have been consumed.
   bytes contents = 3;
-}
-
-message BareNbtData {
-  // The raw, uncompressed contents of an NBT compound.
-  //
-  // Closing tag is required (TAG_End), but the name and type of the root
-  // compound itself must not be included.
-  bytes contents = 1;
 }

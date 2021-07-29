@@ -15,16 +15,16 @@ message PaletteData {
   // reference the palette's states using their indices in
   // this list.
   repeated BlockStateData states = 3;
+}
 
-  message BlockStateData {
-    // The state's main identifier. Examples are "minecraft:stone", "cactus",
-    // and "ooze:legacy".
-    string name = 1;
+message BlockStateData {
+  // The state's main identifier. Examples are "minecraft:stone", "cactus",
+  // and "ooze:legacy".
+  string name = 1;
 
-    // Additional information defining the state, if any. This includes things
-    // like orientation, power, and waterlogged state.
-    bytes properties = 2;
-  }
+  // Additional information defining the state, if any. This includes things
+  // like orientation, power, and waterlogged state.
+  bytes properties = 2;
 }
 
 message PackedUIntArrayData {

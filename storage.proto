@@ -25,6 +25,11 @@ message BlockStateData {
   // Additional information defining the state, if any. This includes things
   // like orientation, power, and waterlogged state.
   bytes properties = 2;
+
+  // Whether or not blocks with this state should be considered "empty". This
+  // allows sections of a level to be optimized away if a large portion of
+  // blocks in it are empty.
+  bool is_empty = 3;
 }
 
 message PackedUIntArrayData {

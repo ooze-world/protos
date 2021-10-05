@@ -4,23 +4,20 @@ package com.github.ooze.protos;
 option java_multiple_files = true;
 
 message PaletteData {
-  // The palette's main identifier. Recommended format is
-  // `namespace:identifier`, but this is not strictly required.
-  string name = 1;
+  // The palette's main identifier.
+  ResourceLocationData name = 1;
 
   // The Minecraft data version that the palette's states are compatible with.
   uint32 data_version = 2;
 
-  // The blocks in the palette. Data using the palette can
-  // reference the palette's states using their indices in
-  // this list.
+  // The blocks in the palette. Data using the palette can reference the
+  // palette's states using their indices in this list.
   repeated BlockStateData states = 3;
 }
 
 message BlockStateData {
-  // The state's main identifier. Examples are "minecraft:stone", "cactus",
-  // and "ooze:legacy".
-  string name = 1;
+  // The state's main identifier.
+  ResourceLocationData name = 1;
 
   // Additional information defining the state, if any. This includes things
   // like orientation, power, and waterlogged state.
@@ -30,6 +27,25 @@ message BlockStateData {
   // allows sections of a level to be optimized away if a large portion of
   // blocks in it are empty.
   bool is_empty = 3;
+}
+
+message ResourceLocationData {
+  // The context in which the resource exists. If missing, the default namespace
+  // "minecraft" is used.
+  //
+  // The namespace can only contain the following characters:
+  //  - digits: 0-9
+  //  - lowercase letters: a-z
+  //  - hyphens: -
+  //  - full stops: .
+  //  - underscores: _
+  string namespace = 1;
+
+  // The resource's name, identifier, or path. Must be present.
+  //
+  // The path can contain any character that a namespace can, in addition to:
+  //   - forward slashes: /
+  string path = 2;
 }
 
 message PackedUIntArrayData {

@@ -44,7 +44,7 @@ message LevelData {
 message CellData {
   // The `name` of the palette whose states are referred to in the `blocks`
   // array. If no palette can be found using that name, the cell is ignored.
-  ResourceLocationData palette_name = 2;
+  string palette_name = 2;
 
   // A 4096-element array of the blocks in this cell.
   //
